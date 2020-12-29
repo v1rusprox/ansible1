@@ -1,0 +1,14 @@
+---
+
+- hosts: db
+  become: true
+  user: root
+  tasks:
+
+    - name: Update apt cache
+      apt:
+        update_cache=yes cache_valid_time=3600
+
+    - name: Install required software
+      apt: name={{ item }} state=present
+      loop: [ 'apache2','python-mysqldb','python3-pymysql','mysql-server','mysql-client','php7.2','php7.2-mysql','libapache2-mod-php7.2','php7.2-cli','php7.2-cgi','php7.2-gd','php7.2-mbstring' ]

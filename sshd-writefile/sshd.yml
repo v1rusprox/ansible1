@@ -1,0 +1,14 @@
+---
+
+- hosts: db
+  become: yes
+  user: root
+ 
+  tasks:
+
+    - name: Enable/Disable root logins over SSH
+      lineinfile:
+        dest: /etc/ssh/sshd_config
+        regexp: "^PermitRootLogin"
+        line: "PermitRootLogin yes"
+        state: present

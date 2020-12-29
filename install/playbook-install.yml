@@ -1,0 +1,22 @@
+---
+- hosts: all
+  become: true
+  tasks:
+# Install Packages
+    - name: Update apt
+      apt: update_cache=yes
+
+    - name: Install Packages
+      apt: name={{ item }} update_cache=yes state=latest
+      loop: [ 'nginx', 'vim','nano','htop' ]
+      tags: [ 'setup' ]
+
+    - name: Copy index page
+      copy:
+        src: index.html
+        dest: /var/www/html/index.html
+        owner: www-data
+        group: www-data
+        mode: '0644'
+      tags: [ 'update', 'sync' ]
+     

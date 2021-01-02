@@ -1,0 +1,43 @@
+---
+- hosts: all
+#  become: true
+  tasks:
+    - name: adding existing user '{{ user }}' to group sudo or other
+      user:
+        name: 'v1rusprox'
+        groups: www-data
+        append: yes
+
+# not working clone git private
+
+    - name: Clone private the code repository to the docroot.
+      become: yes
+      become_user: v1rusprox
+      git:
+        repo: "git@github.com/"
+        dest: /var/www/html
+        accept_hostkey: yes
+        key_file: /home/v1rusprox/.ssh/id_rsa
+#    - name: clone a private repository
+#      become: yes
+#      become_user: v1rusprox
+#      git: >
+#        repo=ssh://git@github.com/
+#        key_file=/home/v1rusprox/.ssh/id_rsa
+#        dest=/var/www/html
+        
+    - name: Ensure /var/www/html directory has correct permissions.
+      file:
+        path: /var/www/html
+        state: directory
+        owner: www-data
+        group: www-data
+
+    - name: Ensure /var/www/html directory exists.
+      file:
+        path: /var/www/html
+        state: directory
+        mode: 0775
+        owner: www-data
+        group: www-data
+

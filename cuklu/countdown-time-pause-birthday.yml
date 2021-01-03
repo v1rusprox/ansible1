@@ -1,0 +1,14 @@
+---
+- name: Happy Birthday Playbook
+  hosts: all
+  tasks:
+  - name: Ten seconds countdown
+    debug:
+      msg: "{{ 10 - item }} осталось несколько секунд ..."
+    loop: "{{ range(10) | list }}"
+    loop_control: 
+      pause: 1
+
+  - name: Display Happy Birthday
+    debug:
+      msg: "С днем рождения!"

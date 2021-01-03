@@ -1,0 +1,9 @@
+---
+
+- name: Range ip address 192.168.1.x to 255
+  hosts: all
+  tasks:
+    - name: Range Loop
+      debug:
+        msg: 192.168.1.{{ item }}
+      loop: "{{ range(0,256,2) | list }}"

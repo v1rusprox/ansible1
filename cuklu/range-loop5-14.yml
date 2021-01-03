@@ -1,0 +1,9 @@
+---
+
+- name: Range 5-14
+  hosts: all
+  tasks:
+    - name: Range Loop
+      debug:
+        msg: "{{ item }}"
+      loop: "{{ range(5,15) | list }}"
